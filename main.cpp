@@ -26,8 +26,11 @@ struct
 }block[MAX_P];  //block[i], where i is the block with number i
 
 string sir, alphabet; map<char,int> var;
-int per[MAX_N], RESULT[100], subm[MAX_N];
+int subm[MAX_N], RESULT[MAX_N];
 
+//  sir: ( ( C C C ) C C ( C C C ) )
+//  per: 3 1 0 0 0 1  0 0 2 0 0 0 2 3
+int per[MAX_N];
 
 //file input
 void read()
@@ -39,18 +42,11 @@ void read()
         while (!inputFile.eof())
             inputFile >> sir;
     inputFile.close();
-
-    /*
-     for(int z=0; z<sir.length(); z++)
-        cout << sir[z];
-    cout << endl;
-    cout << sir.length();
-    */
 }
 
 
 //negation operator transforming
-inline int non(int x)
+int non(int x)
 {
     return (x==0) ? 1:0;
 }
@@ -241,9 +237,6 @@ void solve()
         else
             compute_long_block(i, p1, _operator, p2);
 
-        //cout << p1 << _operator << p2 << "R:" << calculus (p1, _operator, p2) << endl;
-
-
         RESULT[i] = calculus (i, p1, _operator, p2);
 
         for(int t=block[i].start; t<=block[i].finish; t++)
@@ -251,12 +244,9 @@ void solve()
         cout << " " << RESULT[i] << " ";
 
     }
-    //cout << blks_nr;
-    //cout << RESULT[blks_nr] << endl;
     cout << endl;
 }
 
-int subsets_number;
 //generating all 1 and 0 subsets for the number of propositions
 void btrack(int k)
 {
@@ -268,16 +258,6 @@ void btrack(int k)
             var[alphabet[i]]=subm[i];
             cout << alphabet[i] << "=" << subm[i] << " ";
         }
-
-        /*
-        for(i=0; i<alphabet.length(); i++)
-            cout << alphabet[i] << " = " << subm[i] << endl;
-        cout << endl;
-        */
-        //
-
-        //subsets_number++;
-
         solve();
     }
     else
@@ -304,7 +284,6 @@ bool unpaired(int i, int j)
     return false;
 }
 
-
 //each parenthesis must have its pair
 void create_match()
 {
@@ -319,7 +298,6 @@ void create_match()
         {
             a=i;
             ok=1;
-            //cout << a << endl;
         }
 
         if( sir[i]==')' && per[i]==0)
@@ -329,22 +307,16 @@ void create_match()
                 blks_nr++;
                 per[i]=blks_nr;
                 per[a]=blks_nr;
-
-                //cout << per[a] << " " << per[i]<<endl;
-
                 block[blks_nr].start=a;
                 block[blks_nr].finish=i;
             }
             ok=0;
-
-            //cout << block[i].start << " " <<block[i].finish << "\n";
         }
 
         //if all the blocks are made
         //we complete the last one, from 0 to sir.length()-1
         if(!unpaired(1, sir.length()-2) && i==sir.length()-2 && ok)
         {
-            //cout <<"x";
             blks_nr++;
             i++;
             per[i]=blks_nr;
@@ -355,10 +327,7 @@ void create_match()
 
     }
 
-
-   // cout << "text";
 }
-
 
 // check for character inside string
 bool found (char c)
@@ -369,7 +338,6 @@ bool found (char c)
     return false;
 }
 
-
 //the array will contain all the once added propositions from string
 //in the order of string processing
 void buildPropositionsArray()
@@ -378,127 +346,17 @@ void buildPropositionsArray()
         if(islower(sir[i]) && !found(sir[i]))
             alphabet.push_back(sir[i]);
 
-    /*
-    for(int z=0; z<alphabet.length(); z++)
-        cout << alphabet[z] << " ";
-    cout << endl;
-    cout << alphabet.length();
-    */
 }
-
-
 
 int main()
 {
     read();
     buildPropositionsArray();
 
-
-
-
-    //transformare();
-   // generare();
-    //computing the opened-closed parentheses couples
-    // e .g
-    //  ( ( C C C ) C C ( C C C ) )
-    //  3 1 0 0 0 1  0 0 2 0 0 0 2 3
-
-
-
-
     while(unpaired(0, sir.length()-1))
           create_match();
 
-
-
-    //int RESULT[blks_nr+1];
-
-
-        /*
-        create_match();
-
-        create_match();
-
-        create_match();
-
-        create_match();
-
-        create_match();
-
-        create_match();
-
-        create_match();
-
-        */
-
-        /*
-        cout << endl;
-        for(int i=0; i<sir.length( ); i++)
-            cout << per[i]<< " ";
-        cout<<endl;
-        */
-
-        /*
-        for(int i=1; i<=blks_nr; i++)
-            cout << i << " " << block[i].start << " " << block[i].finish << endl;
-        */
-
-        /*
-        int pd=0, pi=0;
-        for(int i=0; i<sir.length(); i++)
-        {
-
-            if(sir[i]=='(')
-               pd++;
-            if(sir[i]==')')
-                pi++;
-
-        }
-        cout << pd << " " <<pi;
-        */
-
-
-
-    /*
-    var['p'] = 0;
-    var['q'] = 1;
-    var['r'] = 1;
-    var['s'] = 0;
-    */
-
-    /*
-    RESULT[1] = 1;
-    RESULT[2] = 0;
-    RESULT[3] = 1;
-    RESULT[4] = 1;
-    */
-
-   // solve();
-
-    /*
-    int a1, a2; char semn;
-    compute_short_block(2, a1, semn, a2);
-    compute_long_block(5, a1, semn, a2);
-    cout << a1 << semn <<a2 << endl;
-    */
-
-    /*
-      for(int t=0; t<sir.length(); t++)
-        cout << per[t] << " ";
-    */
-
-        /*
-        for(int t=0; t<w; t++)
-        {
-            cout << cnt[w].x <<< cnt[w].y << "\n";
-        }
-        */
-
-    //////////////////////////////////////////////////
-
-
     btrack(0);
-    //cout << subsets_number;
 
     return 0;
 }
