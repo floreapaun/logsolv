@@ -1,11 +1,3 @@
-/*
-Propositions are identified by English alphabet letters in lowercase form;
-Input format:
-Logical operators are set in the form of !, ^, V, ->, <=> (Negation, Conjuction, Disjunction, Implication, Equivalence);
-Each two propositions operation must be included inside parentheses;
-Each two block operation must be included inside parentheses;
-*/
-
 #include<iostream>
 #include<fstream>
 #include<map>
