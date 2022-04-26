@@ -1,7 +1,7 @@
 # logsolv
 Propositional logic formula solver
 
-String input format 
+### String input format 
 Propositions are identified by English lowercase alphabet letters;
 Logical operators are set in the form of '!', '^', 'V', '->', '<=>' for 
 Negation, Conjuction, Disjunction, Implication and Equivalence;
